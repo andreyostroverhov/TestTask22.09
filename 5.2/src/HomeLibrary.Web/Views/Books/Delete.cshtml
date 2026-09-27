@@ -1,0 +1,16 @@
+@model HomeLibrary.Web.Models.Book
+@{
+    ViewData["Title"] = "Удаление книги";
+}
+
+<h1 class="h3 mb-3">Удаление книги</h1>
+
+<div class="alert alert-warning">
+    Вы уверены, что хотите удалить книгу <strong>«@Model.Title»</strong> (@Model.Author, @Model.PublicationYear)?
+</div>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Отмена</a>
+</form>

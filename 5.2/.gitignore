@@ -1,0 +1,35 @@
+## Каталоги сборки и кэша .NET
+[Bb]in/
+[Oo]bj/
+out/
+publish/
+
+## Файлы IDE и пользовательских настроек
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.DotSettings.user
+
+## Логи и временные файлы
+*.log
+cookies.txt
+
+## Результаты тестов и покрытия
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+coverage*.json
+coverage*.xml
+
+## Артефакты сборки
+*.dll
+*.pdb
+!wwwroot/lib/**/*.dll
+
+## OS-специфичные файлы
+.DS_Store
+Thumbs.db

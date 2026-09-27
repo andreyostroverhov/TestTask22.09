@@ -1,0 +1,45 @@
+@model HomeLibrary.Web.Models.Book
+
+<div class="row g-3">
+    <div class="col-md-8">
+        <label asp-for="Title" class="form-label">Название *</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="PublicationYear" class="form-label">Год издания *</label>
+        <input asp-for="PublicationYear" type="number" class="form-control" />
+        <span asp-validation-for="PublicationYear" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Author" class="form-label">Автор *</label>
+        <input asp-for="Author" class="form-control" />
+        <span asp-validation-for="Author" class="text-danger"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Isbn" class="form-label">ISBN</label>
+        <input asp-for="Isbn" class="form-control" />
+        <span asp-validation-for="Isbn" class="text-danger"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="PageCount" class="form-label">Страниц</label>
+        <input asp-for="PageCount" type="number" class="form-control" />
+        <span asp-validation-for="PageCount" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Publisher" class="form-label">Издательство</label>
+        <input asp-for="Publisher" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Note" class="form-label">Заметка</label>
+        <input asp-for="Note" class="form-control" />
+    </div>
+
+    <div class="col-12">
+        <label class="form-label">Оглавление</label>
+        <div id="toc-editor" style="height: 260px;"></div>
+        <input asp-for="TableOfContentsHtml" type="hidden" id="toc-input" />
+    </div>
+</div>

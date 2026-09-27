@@ -1,0 +1,104 @@
+@model HomeLibrary.Web.Models.BookListViewModel
+@{
+    ViewData["Title"] = "Домашняя библиотека";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Домашняя библиотека</h1>
+    <a asp-action="Create" class="btn btn-primary">Добавить книгу</a>
+</div>
+
+<form asp-action="Index" method="get" class="card card-body mb-4 bg-light">
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label class="form-label">Название</label>
+            <input type="text" name="title" value="@Model.Title" class="form-control" placeholder="Поиск по названию" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Автор</label>
+            <input type="text" name="author" value="@Model.Author" class="form-control" placeholder="Поиск по автору" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Поиск по оглавлению</label>
+            <input type="text" name="tableOfContents" value="@Model.TableOfContents" class="form-control" placeholder="Слово из оглавления" />
+        </div>
+        <div class="col-md-3 d-flex align-items-end gap-2">
+            <button type="submit" class="btn btn-primary flex-fill">Найти</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Сброс</a>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Год от</label>
+            <input type="number" name="publicationYearFrom" value="@Model.PublicationYearFrom" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Год до</label>
+            <input type="number" name="publicationYearTo" value="@Model.PublicationYearTo" class="form-control" />
+        </div>
+    </div>
+</form>
+
+@if (Model.Items.Count == 0)
+{
+    <div class="alert alert-info">Книги не найдены.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Автор</th>
+                    <th>Год</th>
+                    <th>Издательство</th>
+                    <th class="text-end">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model.Items)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.PublicationYear</td>
+                        <td>@book.Publisher</td>
+                        <td class="text-end text-nowrap">
+                            <a asp-action="Details" asp-route-id="@book.Id" class="btn btn-sm btn-outline-primary">Просмотр</a>
+                            <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-outline-secondary">Изменить</a>
+                            <a asp-action="Delete" asp-route-id="@book.Id" class="btn btn-sm btn-outline-danger">Удалить</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(Model.HasPrevious ? "" : "disabled")">
+                    <a class="page-link" asp-action="Index"
+                       asp-route-page="@(Model.Page - 1)"
+                       asp-route-title="@Model.Title"
+                       asp-route-author="@Model.Author"
+                       asp-route-tableOfContents="@Model.TableOfContents"
+                       asp-route-publicationYearFrom="@Model.PublicationYearFrom"
+                       asp-route-publicationYearTo="@Model.PublicationYearTo">Назад</a>
+                </li>
+                <li class="page-item disabled"><span class="page-link">Стр. @Model.Page из @Model.TotalPages</span></li>
+                <li class="page-item @(Model.HasNext ? "" : "disabled")">
+                    <a class="page-link" asp-action="Index"
+                       asp-route-page="@(Model.Page + 1)"
+                       asp-route-title="@Model.Title"
+                       asp-route-author="@Model.Author"
+                       asp-route-tableOfContents="@Model.TableOfContents"
+                       asp-route-publicationYearFrom="@Model.PublicationYearFrom"
+                       asp-route-publicationYearTo="@Model.PublicationYearTo">Вперёд</a>
+                </li>
+            </ul>
+        </nav>
+    }
+
+    <p class="text-muted">Всего записей: @Model.TotalCount</p>
+}

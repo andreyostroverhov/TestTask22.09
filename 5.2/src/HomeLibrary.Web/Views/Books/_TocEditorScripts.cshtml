@@ -1,0 +1,32 @@
+@model HomeLibrary.Web.Models.Book
+
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script>
+    (function () {
+        var input = document.getElementById('toc-input');
+        var editorHost = document.getElementById('toc-editor');
+
+        var quill = new Quill(editorHost, {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    ['link'],
+                    ['clean']
+                ]
+            }
+        });
+
+        if (input.value) {
+            quill.clipboard.dangerouslyPasteHTML(input.value);
+        }
+
+        var form = input.closest('form');
+        form.addEventListener('submit', function () {
+            input.value = quill.root.innerHTML;
+        });
+    })();
+</script>

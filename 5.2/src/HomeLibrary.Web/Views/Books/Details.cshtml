@@ -1,0 +1,59 @@
+@model HomeLibrary.Web.Models.Book
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">@Model.Title</h1>
+    <div class="text-nowrap">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Изменить</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Удалить</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">К списку</a>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Автор</dt>
+            <dd class="col-sm-9">@Model.Author</dd>
+
+            <dt class="col-sm-3">Год издания</dt>
+            <dd class="col-sm-9">@Model.PublicationYear</dd>
+
+            <dt class="col-sm-3">ISBN</dt>
+            <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Isbn) ? "—" : Model.Isbn)</dd>
+
+            <dt class="col-sm-3">Издательство</dt>
+            <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Publisher) ? "—" : Model.Publisher)</dd>
+
+            <dt class="col-sm-3">Страниц</dt>
+            <dd class="col-sm-9">@(Model.PageCount?.ToString() ?? "—")</dd>
+
+            <dt class="col-sm-3">Заметка</dt>
+            <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Note) ? "—" : Model.Note)</dd>
+
+            <dt class="col-sm-3">Обновлено</dt>
+            <dd class="col-sm-9">@Model.UpdatedAtUtc.ToLocalTime().ToString("g")</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">Оглавление</div>
+    <div class="card-body">
+        @if (string.IsNullOrWhiteSpace(Model.TableOfContentsHtml))
+        {
+            <p class="text-muted mb-0">Оглавление не заполнено.</p>
+        }
+        else
+        {
+            <div class="toc-content">@Html.Raw(Model.TableOfContentsHtml)</div>
+        }
+    </div>
+</div>
+
+<details class="mb-4">
+    <summary class="text-muted">Показать XML-представление оглавления</summary>
+    <pre class="bg-light p-3 border rounded mt-2"><code>@Model.TableOfContentsXml</code></pre>
+</details>
